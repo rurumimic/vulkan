@@ -2,7 +2,40 @@
 
 - [vulkan](https://www.vulkan.org/)
   - [learn](https://www.vulkan.org/learn)
-    - nvidia: [tips](https://developer.nvidia.com/blog/vulkan-dos-donts/), [advanced api](https://developer.nvidia.com/blog/advanced-api-performance-vulkan-clearing-and-presenting/), [raytracing](https://github.com/nvpro-samples/vk_raytracing_tutorial_KHR)
+  - [guide](https://docs.vulkan.org/guide/latest/index.html)
+  - [tutorial](https://docs.vulkan.org/tutorial/latest/index.html)
+  - [samples](https://docs.vulkan.org/samples/latest/README.html)
+
+## SDK
+
+- lunarg: [getting started](https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started_ubuntu.html)
+
+### Ubuntu 22.04 (Jammy Jellyfish)
+
+```bash
+wget -qO- https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo tee /etc/apt/trusted.gpg.d/lunarg.asc
+sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list https://packages.lunarg.com/vulkan/lunarg-vulkan-jammy.list
+sudo apt update
+```
+
+```bash
+sudo apt install vulkan-sdk
+sudo apt install vulkan-tools libvulkan-dev vulkan-validationlayers-dev spirv-tools
+sudo apt install libglfw3-dev libglm-dev
+sudo apt install libxxf86vm-dev libxi-dev
+```
+
+#### Shader Compiler
+
+- google: [shaderc](https://github.com/google/shaderc/blob/main/downloads.md)
+
+#### Verify Installation
+
+```bash
+vkvia
+vulkaninfo
+vkcube
+```
 
 ## Links
 
