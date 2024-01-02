@@ -1,9 +1,11 @@
 // #include <vulkan/vulkan.h>
+// #include <vulkan/vulkan_core.h>
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 #include <cstdlib>
 #include <cstring>
+#include <cstdint>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -44,8 +46,11 @@ public:
 
 private:
   GLFWwindow *window;
+
   VkInstance instance;
   VkDebugUtilsMessengerEXT debugMessenger;
+
+  VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
 
   void initWindow() {
     glfwInit();
@@ -62,7 +67,32 @@ private:
     pickPhysicalDevice();
   }
 
-  void pickPhysicalDevice() {}
+  void pickPhysicalDevice() {
+    uint32_t deviceCount = 0;
+    vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
+
+    if (deviceCount == 0) {
+      throw std::runtime_error("failed to find GPUs with Vulkan support!");
+    }
+
+    std::vector<VkPhysicalDevice> devices(deviceCount);
+    vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
+
+    for (const auto& device : devices) {
+      if (isDeviceSuitable(device)) {
+        physicalDevice = device;
+        break;
+      }
+    }
+
+    if (physicalDevice == VK_NULL_HANDLE) {
+      throw std::runtime_error("failed to find a suitable GPU!");
+    }
+  }
+
+  bool isDeviceSuitable(VkPhysicalDevice device) {
+    return true;
+  }
 
   void setupDebugMessenger() {
     if (!enableValidationLayers)
